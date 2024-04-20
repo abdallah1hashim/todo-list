@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import "./styles.css";
+import { Exo_2 } from "next/font/google";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
+
+const inter = Exo_2({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className=" grid grid-rows-[8rem_1fr] h-screen">
+      <body
+        className={`grid grid-rows-[8rem_1fr_6rem] h-screen ${inter.className}`}
+      >
         <Header />
         <Main>{children}</Main>
       </body>

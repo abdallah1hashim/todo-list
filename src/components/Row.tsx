@@ -24,7 +24,7 @@ function Row({ children, type, justify, className, ...rest }: row) {
   return (
     <div
       className={`
-  flex ${justifyFlex} items-center ${rowClass} ${
+  flex ${justifyFlex} justify-between items-center ${rowClass} ${
         className ? className : ""
       }
   `}
