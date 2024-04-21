@@ -1,6 +1,5 @@
 import TaskPage from "@/components/TaskPage";
 import prisma from "@/lib/db/prisma";
-import { revalidatePath } from "next/cache";
 
 async function Home() {
   // const res = await fetch(process.env.URL + "/api/tasks", {

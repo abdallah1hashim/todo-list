@@ -38,19 +38,19 @@ function Button({
   disable,
   ...rest
 }: button) {
-  if (type === "link") {
-    return (
-      <Link
-        href={href}
-        className={`${mainStyles} ${variantStyles[variant]}  ${
-          customized ? customized : "bg-indigo-500"
-        }  ${sizeStyles[size]} `}
-        {...rest}
-      >
-        {children}
-      </Link>
-    );
-  }
+  // if (type === "link") {
+  //   return (
+  //     <Link
+  //       href={href}
+  //       className={`${mainStyles} ${variantStyles[variant]}  ${
+  //         customized ? customized : "bg-indigo-500"
+  //       }  ${sizeStyles[size]} `}
+  //       {...rest}
+  //     >
+  //       {children}
+  //     </Link>
+  //   );
+  // }
   return (
     <button
       disabled={disable}
