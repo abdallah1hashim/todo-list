@@ -2,7 +2,7 @@ import Button from "./Button";
 
 function Delete() {
   return (
-    <Button customized="bg-slate-200" size="sm" varriant="customized">
+    <Button customized="bg-slate-200" size="sm" variant="customized">
       🚫
     </Button>
   );

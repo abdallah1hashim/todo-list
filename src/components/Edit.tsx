@@ -13,7 +13,7 @@ function Edit({ setIsEditing }: edit) {
     <Button
       customized="bg-slate-200"
       size="sm"
-      varriant="customized"
+      variant="customized"
       onClick={handleOnClick}
     >
       ✏️

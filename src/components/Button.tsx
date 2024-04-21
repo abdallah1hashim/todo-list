@@ -2,18 +2,19 @@ import Link from "next/link";
 
 type button = {
   children: React.ReactNode;
-  type: "normal" | "submit" | "link";
-  varriant: "primary" | "secondary" | "danger" | "safe" | "customized";
-  size: "sm" | "md" | "lg";
+  type?: "normal" | "submit" | "link";
+  variant?: "primary" | "secondary" | "danger" | "safe" | "customized";
+  size?: "sm" | "md" | "lg";
   onClick?: () => void;
   href?: string;
   customized?: string;
+  disable?: boolean;
 };
 
 const mainStyles =
-  " rounded-md focus:outline-4 focus:outline-indigo-500 focus:outline-offset-4 uppercase";
+  " rounded-md focus:outline-4 focus:outline-indigo-500 focus:outline-offset-4 uppercase disabled:bg-gray-500";
 
-const varriantStyles = {
+const variantStyles = {
   primary: " border-none bg-indigo-500 text-gray-100",
   secondary: "border-2 border-indigo-500 text-indigo-500",
   danger: " bg-red-500 border-none text-gray-200",
@@ -28,19 +29,20 @@ const sizeStyles = {
 
 function Button({
   children,
-  type,
-  varriant,
-  size,
+  type = "normal",
+  variant = "primary",
+  size = "md",
   onClick,
   href,
   customized,
+  disable,
   ...rest
 }: button) {
   if (type === "link") {
     return (
       <Link
         href={href}
-        className={`${mainStyles} ${varriantStyles[varriant]}  ${
+        className={`${mainStyles} ${variantStyles[variant]}  ${
           customized ? customized : "bg-indigo-500"
         }  ${sizeStyles[size]} `}
         {...rest}
@@ -51,9 +53,10 @@ function Button({
   }
   return (
     <button
+      disabled={disable}
       onClick={onClick}
       type={type === "submit" ? "submit" : "button"}
-      className={`${mainStyles} ${varriantStyles[varriant]} ${
+      className={`${mainStyles} ${variantStyles[variant]} ${
         sizeStyles[size]
       } ${customized ? customized : ""} `}
       {...rest}
@@ -62,11 +65,5 @@ function Button({
     </button>
   );
 }
-
-Button.defaultProps = {
-  type: "normal",
-  varriant: "primary",
-  size: "md",
-};
 
 export default Button;

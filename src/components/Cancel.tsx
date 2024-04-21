@@ -13,7 +13,7 @@ function Cancel({ setIsEditing }: cancel) {
     <Button
       customized="bg-slate-200"
       size="sm"
-      varriant="customized"
+      variant="customized"
       onClick={handleOnClick}
     >
       ❌

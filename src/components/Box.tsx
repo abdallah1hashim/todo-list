@@ -6,39 +6,72 @@ import Delete from "./Delete";
 import Save from "./Save";
 import Edit from "./Edit";
 import Cancel from "./Cancel";
+import { Task } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 type box = {
-  data: { title: string; date: string };
+  task: Task;
 };
 
-function Box({ data }: box) {
-  const [isChecked, setIsChecked] = useState(false);
+function Box({ task }: box) {
+  const [name, setName] = useState("");
+  const [isChecked, setIsChecked] = useState(task.isFinished);
   const [isEditing, setIsEditing] = useState(false);
+  const router = useRouter();
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setIsChecked(e.target.checked);
+    await fetch(`api/tasks/${task.id}`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ isFishied: isChecked }),
+    });
+    router.refresh();
   };
 
   return (
-    <Row className=" w-full bg-white my-4 px-4 py-2 rounded-md">
-      <Row className=" gap-4 ">
+    <Row
+      type="horizontal"
+      justify="normal"
+      className=" my-4 w-full rounded-md bg-white px-4 py-2"
+    >
+      <Row type="horizontal" justify="normal" className=" gap-4 ">
         <CheckBox onChange={handleCheckboxChange} checked={isChecked} />
         <div className="flex flex-col">
-          <span
-            className={` font-bold ${
-              isChecked ? "text-gray-400" : "text-gray-900"
-            } text-md ${isChecked ? "line-through" : ""}`}
-          >
-            {data.title}
-          </span>
-          <span className=" font-semibold text-gray-700 text-sm">
-            {data.date}
+          {isEditing ? (
+            <input
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              className="rounded-md border-2 border-slate-400 px-2 focus:outline-indigo-500"
+              placeholder={task.name}
+            />
+          ) : (
+            <span
+              className={` font-bold ${
+                isChecked ? "text-gray-400" : "text-gray-900"
+              } text-md ${isChecked ? "line-through" : ""}`}
+            >
+              {task.name}
+            </span>
+          )}
+          <span className=" text-sm font-semibold text-gray-500">
+            {task.createdAt.toLocaleString()}
           </span>
         </div>
       </Row>
-      <Row justify="normal" className=" text-2xl gap-2">
+      <Row type="horizontal" justify="normal" className=" gap-2 text-2xl">
         {isEditing ? <Cancel setIsEditing={setIsEditing} /> : <Delete />}
-        {isEditing ? <Save /> : <Edit setIsEditing={setIsEditing} />}
+        {isEditing ? (
+          <Save
+            data={{ id: task.id, name: name }}
+            setIsEditing={setIsEditing}
+          />
+        ) : (
+          <Edit setIsEditing={setIsEditing} />
+        )}
       </Row>
     </Row>
   );

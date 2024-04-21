@@ -1,7 +1,7 @@
 type row = {
   children: React.ReactNode;
-  type: "vertical" | "horizontal";
-  justify:
+  type?: "vertical" | "horizontal";
+  justify?:
     | "normal"
     | "start"
     | "end"
@@ -13,7 +13,13 @@ type row = {
   className?: string;
 };
 
-function Row({ children, type, justify, className, ...rest }: row) {
+function Row({
+  children,
+  type = "horizontal",
+  justify = "between",
+  className,
+  ...rest
+}: row) {
   const classNames = {
     horizontal: "flex-row",
     vertical: "flex-col",
@@ -24,9 +30,9 @@ function Row({ children, type, justify, className, ...rest }: row) {
   return (
     <div
       className={`
-  flex ${justifyFlex} justify-between items-center ${rowClass} ${
-        className ? className : ""
-      }
+  flex ${justifyFlex} items-center justify-between ${rowClass} ${
+    className ? className : ""
+  }
   `}
       {...rest}
     >
@@ -34,10 +40,5 @@ function Row({ children, type, justify, className, ...rest }: row) {
     </div>
   );
 }
-
-Row.defaultProps = {
-  type: "horizontal",
-  justify: "between",
-};
 
 export default Row;

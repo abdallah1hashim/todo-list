@@ -1,45 +1,22 @@
-"use client";
-import Box from "@/components/Box";
-import Row from "@/components/Row";
-import Button from "@/components/Button";
-import Form from "@/components/Form";
-import { useState } from "react";
+import TaskPage from "@/components/TaskPage";
+import prisma from "@/lib/db/prisma";
+import { revalidatePath } from "next/cache";
 
-const data = [
-  { title: "SMTH", date: "5 may, 21 AM 2024" },
-  { title: "SMTH", date: "5 may, 21 AM 2024" },
-];
-
-function Home() {
-  const [isAdd, setIsAdd] = useState(false);
-
-  function handleClick(): void {
-    setIsAdd(!isAdd);
-  }
-
+async function Home() {
+  // const res = await fetch(process.env.URL + "/api/tasks", {
+  //   method: "GET",
+  //   cache: "force-cache",
+  //   next: { revalidate: 10000 },
+  // });
+  // console.log(res);
+  // const tasks: Task[] = await res.json();
+  const tasks = await prisma.task.findMany({
+    orderBy: { id: "desc" },
+  });
+  1;
   return (
     <div className="grid grid-rows-[1fr_6rem]">
-      <Row type="vertical">
-        <Row className="w-full overflow-auto">
-          <Button varriant={isAdd ? "danger" : "primary"} onClick={handleClick}>
-            {isAdd ? "cancel" : "Add"}
-          </Button>
-          <select></select>
-        </Row>
-        <Row
-          type="vertical"
-          className="w-full bg-slate-200 my-6 p-6 rounded-md"
-        >
-          {data.map((d) => (
-            <Box data={d} key={d.date} />
-          ))}
-        </Row>
-      </Row>
-      {isAdd && (
-        <Row className=" mt-6">
-          <Form />
-        </Row>
-      )}
+      <TaskPage tasks={tasks} />
     </div>
   );
 }
