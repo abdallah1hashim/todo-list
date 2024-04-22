@@ -15,7 +15,6 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
   }
   return (
     <>
-    
       <Row type="vertical">
         <Row className="w-full overflow-auto">
           <Button variant={isAdd ? "danger" : "primary"} onClick={handleClick}>
@@ -28,19 +27,18 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
           </select>
         </Row>
         {isAdd && (
-      <Row className=" mt-6 w-full">
-        <Form />
-      </Row>
-    )}
+          <Row className=" mt-6 w-full">
+            <Form />
+          </Row>
+        )}
         <Row
           justify="normal"
           type="vertical"
-          className="my-6 w-full max-h-[calc(100vh-18rem)] rounded-md bg-slate-200 p-6 overflow-auto "
-
+          className="my-6 max-h-[calc(100vh-18rem)] w-full overflow-auto rounded-md bg-slate-200 p-6 "
         >
-          {tasks.map((task) => (
-            <Box task={task} key={task.id} />
-          ))}
+          {tasks.length > 0 &&
+            tasks.map((task) => <Box task={task} key={task.id} />)}
+          {!(tasks.length > 0) && <h2>Add Some Tasks To Get Started 😁</h2>}
         </Row>
       </Row>
     </>

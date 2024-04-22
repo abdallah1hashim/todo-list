@@ -22,11 +22,12 @@ function Box({ task }: box) {
   const handleCheckboxChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setIsChecked(e.target.checked);
+    await setIsChecked(e.target.checked);
+    const updatedTask = { ...task, isFinished: !isChecked };
     await fetch(`api/tasks/${task.id}`, {
-      method: "POST",
+      method: "PATCH",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ isFishied: isChecked }),
+      body: JSON.stringify(updatedTask),
     });
     router.refresh();
   };
@@ -36,7 +37,7 @@ function Box({ task }: box) {
     <Row
       type="horizontal"
       justify="normal"
-      className=" my-4 w-full rounded-md bg-white px-4 py-2"
+      className=" my-4 w-full flex-wrap rounded-md bg-white px-4 py-2 "
     >
       <Row type="horizontal" justify="normal" className=" gap-4 ">
         <CheckBox onChange={handleCheckboxChange} checked={isChecked} />
@@ -63,17 +64,14 @@ function Box({ task }: box) {
           </span>
         </div>
       </Row>
-      <Row type="horizontal" justify="normal" className=" gap-2 text-2xl">
+      <Row type="horizontal" justify="normal" className=" gap-2 text-2xl ">
         {isEditing ? (
           <Cancel setIsEditing={setIsEditing} />
         ) : (
           <Delete id={task.id} />
         )}
         {isEditing ? (
-          <Save
-            data={{ id: task.id, name: name }}
-            setIsEditing={setIsEditing}
-          />
+          <Save name={name} data={task} setIsEditing={setIsEditing} />
         ) : (
           <Edit setIsEditing={setIsEditing} />
         )}
