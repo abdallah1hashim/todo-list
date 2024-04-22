@@ -30,7 +30,8 @@ function Box({ task }: box) {
     });
     router.refresh();
   };
-
+  const createdAtDate = new Date(task.createdAt);
+  console.log(createdAtDate.toLocaleDateString());
   return (
     <Row
       type="horizontal"
@@ -58,12 +59,16 @@ function Box({ task }: box) {
             </span>
           )}
           <span className=" text-sm font-semibold text-gray-500">
-            {task.createdAt.toLocaleString()}
+            {createdAtDate.toLocaleDateString()}
           </span>
         </div>
       </Row>
       <Row type="horizontal" justify="normal" className=" gap-2 text-2xl">
-        {isEditing ? <Cancel setIsEditing={setIsEditing} /> : <Delete id={task.id} />}
+        {isEditing ? (
+          <Cancel setIsEditing={setIsEditing} />
+        ) : (
+          <Delete id={task.id} />
+        )}
         {isEditing ? (
           <Save
             data={{ id: task.id, name: name }}
