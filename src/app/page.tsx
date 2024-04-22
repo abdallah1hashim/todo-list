@@ -1,5 +1,6 @@
 import TaskPage from "@/components/TaskPage";
 import prisma from "@/lib/db/prisma";
+import { Suspense } from "react";
 
 async function Home() {
   // const res = await fetch(process.env.URL + "/api/tasks", {
@@ -13,7 +14,11 @@ async function Home() {
   const tasks = await prisma.task.findMany({
     orderBy: { id: "desc" },
   });
-  return <TaskPage tasks={tasks} />;
+  return (
+    <Suspense>
+      <TaskPage tasks={tasks} />
+    </Suspense>
+  );
 }
 
 export default Home;
