@@ -5,8 +5,9 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import { useState } from "react";
 import { Task } from "@prisma/client";
+import Filter from "./Filter";
 
-const sortOptions: string[] = ["All", "Finished", "Ongoing"];
+const filterOptions: string[] = ["All", "Finished", "Ongoing"];
 
 function TaskPage({ tasks }: { tasks: Task[] }) {
   const [isAdd, setIsAdd] = useState(false);
@@ -20,11 +21,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
           <Button variant={isAdd ? "danger" : "primary"} onClick={handleClick}>
             {isAdd ? "cancel" : "Add"}
           </Button>
-          <select className=" rounded-md px-2 py-2 uppercase">
-            {sortOptions.map((opt) => (
-              <option key={opt}>{opt}</option>
-            ))}
-          </select>
+          <Filter filterOptions={filterOptions} />
         </Row>
         {isAdd && (
           <Row className=" mt-6 w-full">
