@@ -19,10 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`grid grid-rows-[8rem_1fr] h-screen min-h-screen ${inter.className} overflow-hidden`}
+        className={`grid h-screen min-h-screen grid-rows-[8rem_1fr_2rem] ${inter.className} overflow-hidden`}
       >
         <Header />
         <Main className="overflow-hidden">{children}</Main>
+        <div></div>
       </body>
     </html>
   );

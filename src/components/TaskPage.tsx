@@ -35,7 +35,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
         <Row
           justify="normal"
           type="vertical"
-          className="my-6 w-full max-h-[calc(100vh-12rem)] rounded-md bg-slate-200 p-6 overflow-auto "
+          className="my-6 w-full max-h-[calc(100vh-18rem)] rounded-md bg-slate-200 p-6 overflow-auto "
 
         >
           {tasks.map((task) => (
