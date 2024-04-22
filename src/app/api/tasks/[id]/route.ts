@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function GET(
   req: Request,
@@ -55,7 +56,7 @@ export async function PATCH(
       name: name,
     },
   });
-
+  revalidatePath("/");
   return new Response(JSON.stringify({ msg: "task has been updated" }), {
     headers: {
       "Content-Type": "application/json",
@@ -67,10 +68,11 @@ export async function DELETE(
   req: Request,
   { params }: { params: { id: string } },
 ) {
- 
   await prisma.task.delete({
-    where: { id: params.id }
+    where: { id: params.id },
   });
+
+  revalidatePath("/");
 
   return new Response(JSON.stringify({ msg: "task has been deleted" }), {
     headers: {
