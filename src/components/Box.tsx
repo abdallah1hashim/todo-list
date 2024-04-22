@@ -14,6 +14,9 @@ type box = {
 };
 
 function Box({ task }: box) {
+  console.log(task.isFinished);
+  console.log(typeof task.isFinished);
+
   const [name, setName] = useState("");
   const [isChecked, setIsChecked] = useState(task.isFinished);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +25,7 @@ function Box({ task }: box) {
   const handleCheckboxChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    await setIsChecked(e.target.checked);
+    setIsChecked(e.target.checked);
     const updatedTask = { ...task, isFinished: !isChecked };
     await fetch(`api/tasks/${task.id}`, {
       method: "PATCH",
@@ -32,7 +35,6 @@ function Box({ task }: box) {
     router.refresh();
   };
   const createdAtDate = new Date(task.createdAt);
-  console.log(createdAtDate.toLocaleDateString());
   return (
     <Row
       type="horizontal"

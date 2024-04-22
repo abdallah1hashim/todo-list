@@ -1,12 +1,15 @@
+// "use client";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function Filter({ filterOptions }: { filterOptions: string[] }) {
   const searchParams = useSearchParams();
-  console.log(searchParams.get("show"));
+  const router = useRouter();
+
   const filter = searchParams.get("show") || "";
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    router.push(`?show=${e.target.value}`);
   };
 
   return (
