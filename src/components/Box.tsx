@@ -63,7 +63,7 @@ function Box({ task }: box) {
         </div>
       </Row>
       <Row type="horizontal" justify="normal" className=" gap-2 text-2xl">
-        {isEditing ? <Cancel setIsEditing={setIsEditing} /> : <Delete />}
+        {isEditing ? <Cancel setIsEditing={setIsEditing} /> : <Delete id={task.id} />}
         {isEditing ? (
           <Save
             data={{ id: task.id, name: name }}

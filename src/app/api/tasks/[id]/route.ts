@@ -63,3 +63,19 @@ export async function PATCH(
     status: 200,
   });
 }
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
+ 
+  await prisma.task.delete({
+    where: { id: params.id }
+  });
+
+  return new Response(JSON.stringify({ msg: "task has been deleted" }), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    status: 200,
+  });
+}

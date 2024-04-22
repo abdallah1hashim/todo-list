@@ -14,9 +14,7 @@ async function Home() {
   });
   1;
   return (
-    <div className="grid grid-rows-[1fr_6rem]">
       <TaskPage tasks={tasks} />
-    </div>
   );
 }
 
