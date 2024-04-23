@@ -14,11 +14,7 @@ async function Home() {
   const tasks = await prisma.task.findMany({
     orderBy: { id: "desc" },
   });
-  return (
-    <Suspense>
-      <TaskPage tasks={tasks} />
-    </Suspense>
-  );
+  return <TaskPage tasks={tasks} />;
 }
 
 export default Home;
