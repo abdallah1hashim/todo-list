@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Task } from "@prisma/client";
 import Filter from "./Filter";
 import { useSearchParams } from "next/navigation";
@@ -35,7 +35,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
     setIsAdd(!isAdd);
   }
   return (
-    <>
+    <Suspense>
       <Row type="vertical">
         <Row className="w-full overflow-auto">
           <Button variant={isAdd ? "danger" : "primary"} onClick={handleClick}>
@@ -60,7 +60,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
           )}
         </Row>
       </Row>
-    </>
+    </Suspense>
   );
 }
 

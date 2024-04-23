@@ -13,7 +13,7 @@ function Form() {
     e.preventDefault();
 
     setIsLoading(true);
-    const response = await fetch("/api/tasks", {
+    await fetch("/api/tasks", {
       method: "POST",
       body: JSON.stringify({ name: name }),
       headers: {
@@ -21,8 +21,6 @@ function Form() {
       },
     });
     setIsLoading(false);
-    console.log(response);
-    if (response.status !== 201) return;
     router.refresh();
   }
 
