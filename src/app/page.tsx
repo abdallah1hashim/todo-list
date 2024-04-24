@@ -15,8 +15,7 @@ async function Home() {
     orderBy: { id: "desc" },
   });
   return (
-    <Suspense fallback={<h2 className="text-center">Loading..</h2>}>
-      {" "}
+    <Suspense>
       <TaskPage tasks={tasks} />
     </Suspense>
   );
