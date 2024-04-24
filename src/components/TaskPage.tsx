@@ -35,7 +35,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
     setIsAdd(!isAdd);
   }
   return (
-    <Suspense>
+    <>
       <Row type="vertical">
         <Row className="w-full overflow-auto">
           <Button variant={isAdd ? "danger" : "primary"} onClick={handleClick}>
@@ -43,6 +43,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
           </Button>
           <Filter filterOptions={filterOptions} />
         </Row>
+
         {isAdd && (
           <Row className=" mt-6 w-full">
             <Form />
@@ -60,7 +61,7 @@ function TaskPage({ tasks }: { tasks: Task[] }) {
           )}
         </Row>
       </Row>
-    </Suspense>
+    </>
   );
 }
 

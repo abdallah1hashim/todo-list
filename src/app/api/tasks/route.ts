@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     data: { name },
   });
 
-  revalidateTag("tasks");
+  revalidatePath("/");
 
   return new Response(JSON.stringify({ msg: "task has been added" }), {
     headers: {
