@@ -3,6 +3,8 @@ import prisma from "@/lib/db/prisma";
 import { Task } from "@prisma/client";
 import { Suspense } from "react";
 
+const dynamic = "force-dynamic";
+
 async function Home() {
   // const res = await fetch(process.env.URL + "/api/tasks", {
   //   method: "GET",

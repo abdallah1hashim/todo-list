@@ -1,43 +1,48 @@
-"use server";
-
+"use client";
+import { useState } from "react";
 import Button from "./Button";
 import Row from "./Row";
-import { revalidatePath } from "next/cache";
-import prisma from "@/lib/db/prisma";
-
-const addTask = async function (formData: FormData) {
-  "use server";
-
-  const name = formData.get("name") as string;
-
-  if (!name) {
-    throw Error("missing required fields");
-  }
-
-  await prisma.task.create({
-    data: { name },
-  });
-
-  revalidatePath("/");
-};
+import { useRouter } from "next/navigation";
 
 function Form() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setIsLoading(true);
+    await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({ name: name }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    setIsLoading(false);
+    router.refresh();
+  }
+
   return (
     <form
-      // onSubmit={handleSubmit}
-      action={addTask}
+      onSubmit={handleSubmit}
+      action="/api/tasks"
       method="POST"
       className=" w-full"
     >
       <Row className="">
         <input
+          onChange={(e) => setName(e.target.value)}
+          required
+          value={name}
           type="text"
           name="name"
           className=" rounded-lg px-2 py-1 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
           placeholder="Enter Any Task ☺️"
         />
-        <Button type="submit" variant="safe">
-          Save
+        <Button type="submit" variant="safe" disable={isLoading}>
+          {isLoading ? "loading..." : "Save"}
         </Button>
       </Row>
     </form>
